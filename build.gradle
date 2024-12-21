@@ -1,0 +1,133 @@
+buildscript {
+        repositories {
+            mavenCentral()
+        }
+    dependencies {
+        classpath 'org.springframework.boot:spring-boot-gradle-plugin:3.2.0'
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+plugins {
+    id 'org.springframework.boot' version '3.2.0' apply false
+    id 'io.spring.dependency-management' version '1.0.15.RELEASE' apply false
+    id 'org.springdoc.openapi-gradle-plugin' version '1.9.0' apply false
+    id "org.openapi.generator" version "7.10.0" apply false
+
+
+}
+
+allprojects {
+    group = 'com.gama.whiv'
+    version = '1.0.0-SNAPSHOT'
+
+    repositories {
+        mavenCentral()
+    }
+
+    apply plugin: 'java'
+    apply plugin: 'org.springdoc.openapi-gradle-plugin'
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+}
+
+ext {
+    springCloudVersion = '2023.0.0'
+}
+
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    apply plugin: 'docker'
+    apply plugin: 'org.springdoc.openapi-gradle-plugin'
+    apply plugin:  "org.openapi.generator"
+
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
+
+    sourceSets {
+        main {
+            java {
+                // Exclude the 'controller' package by default
+                exclude '**/controller/**'
+            }
+        }
+    }
+
+    // Task to include 'controller' when building for Docker
+    task includeControllerForDocker {
+        doFirst {
+            sourceSets.main.java {
+                // Re-include the 'controller' package for this context
+                include '**/controller/**'
+            }
+        }
+    }
+
+    dependencies {
+        implementation 'org.springframework.boot:spring-boot-starter-web:3.2.0'
+        implementation 'org.springframework.boot:spring-boot-starter-data-jpa:3.2.0'
+        implementation 'org.springframework.boot:spring-boot-starter-actuator:3.2.0'
+
+        compileOnly 'org.projectlombok:lombok:1.18.30'
+        annotationProcessor 'org.projectlombok:lombok:1.18.30'
+
+        testImplementation 'org.springframework.boot:spring-boot-starter-test:3.2.0'
+
+        // JUnit 5
+        testImplementation 'org.junit.jupiter:junit-jupiter-api:5.9.3'
+        testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.9.3'
+
+        // Mockito
+        testImplementation 'org.mockito:mockito-core:5.3.1'
+        testImplementation 'org.mockito:mockito-junit-jupiter:5.3.1'
+
+        // Hamcrest for additional assertion capabilities
+        testImplementation 'org.hamcrest:hamcrest-library:2.2'
+
+        // Optional: If you need database testing
+        implementation 'com.h2database:h2'
+
+//        implementation 'org.springdoc:springdoc-openapi-ui:1.8.0'
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0'
+        implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+    }
+    openApi  {
+        apiDocsUrl = 'http://localhost:8080/v3/api-docs'
+        outputDir = file("$buildDir/openapi")
+        outputFileName = "openapi.yaml"
+    }
+    openApiGenerate {
+        generatorName = "typescript-angular" // Specify Angular generator
+        inputSpec = "$buildDir/openapi/openapi.yaml" // Path to your OpenAPI YAML file
+        outputDir = "$rootDir/fe-web/src/services/" // Output directory for generated code
+        apiPackage = "${project.name}/api" // Customize as needed
+        modelPackage = " ${project.name}.model" // Customize as needed
+    }
+//    openApiGenerate.dependsOn(openApi )
+
+    docker {
+        baseImage = 'openjdk:21-jdk-slim'
+        maintainer = 'Gama Whiv Team'
+    }
+
+    task buildDocker(type: Docker, dependsOn: build) {
+        doFirst {
+            copy {
+                from jar
+                into stageDir
+            }
+        }
+
+        dockerfile = file('Dockerfile')
+        tagVersion = project.version
+    }
+}

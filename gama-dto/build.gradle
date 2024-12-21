@@ -1,0 +1,13 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // Add necessary dependencies for DTOs
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.0'
+    // Add any other dependencies that might be required
+}

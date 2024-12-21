@@ -1,0 +1,49 @@
+rootProject.name = 'gama-whiv'
+
+include 'system-user-management'
+include 'gama-dto'
+include 'fi-onboarding'
+//
+//// Data Layer Modules
+//include 'data-ingestion'
+//include 'data-normalization'
+include 'customer-repository'
+//include 'transaction-repository'
+//
+//// Analytics Modules
+//include 'fraud-detection'
+//include 'risk-scoring'
+//include 'pattern-recognition'
+//include 'entity-resolution'
+//include 'behavioral-analytics'
+//include 'link-analysis'
+//include 'geospatial-analysis'
+//include 'temporal-analysis'
+//
+//// Compliance and Reporting
+//include 'regulatory-reporting'
+//include 'case-management'
+//include 'audit-compliance'
+//include 'aml-knowledge'
+//
+//// Integration and Security
+//include 'external-data-integration'
+//include 'alert-management'
+//include 'insights-dashboard'
+//include 'ml-lifecycle'
+//include 'api-gateway'
+//include 'data-retention'
+//include 'security-control'
+//include 'privacy-masking'
+//include 'threat-intelligence'
+//
+//// Testing and Monitoring
+//include 'simulation-testing'
+//include 'continuous-monitoring'
+//include 'governance-engine'
+//include 'fraud-repository'
+//include 'notification-system'
+//include 'persona-profiling'
+//include 'big-data-processing'
+//include 'reporting-visualization'
+//include 'policy-management'

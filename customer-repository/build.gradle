@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+repositories {
+    mavenCentral()
+}
+dependencies {
+
+    implementation project(':gama-dto')
+    // H2 Database
+    runtimeOnly 'com.h2database:h2:2.2.224'
+
+    // Neo4j Kernel and Spring Boot Starter
+    implementation 'org.springframework.boot:spring-boot-starter-data-neo4j'
+    implementation 'org.neo4j:neo4j-kernel:4.4.28'
+    implementation 'org.neo4j:neo4j-ogm-bolt-driver:3.2.38'
+
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'org.flywaydb:flyway-core'
+    implementation 'org.neo4j:neo4j-kernel:5.26.0'
+}
