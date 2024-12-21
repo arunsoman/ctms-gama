@@ -1,0 +1,24 @@
+<div class="dashboard-container">
+  <div class="dashboard-header">
+    <h1>Network Analysis Dashboard</h1>
+    <app-network-filters (filterChange)="onFilterChange($event)"></app-network-filters>
+  </div>
+  
+  <div class="dashboard-grid">
+    <div class="dashboard-item risk-summary">
+      <app-risk-summary></app-risk-summary>
+    </div>
+    
+    <div class="dashboard-item network-graph">
+      <app-network-graph></app-network-graph>
+    </div>
+    
+    <div class="dashboard-item alerts">
+      <app-alerts></app-alerts>
+    </div>
+
+    <div class="dashboard-item risk-analysis">
+      <app-risk-analysis></app-risk-analysis>
+    </div>
+  </div>
+</div>

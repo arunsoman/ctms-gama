@@ -1,0 +1,42 @@
+<div class="network-container">
+  <div class="controls">
+    <h2>Network Analysis</h2>
+    <div class="risk-legend">
+      <div class="legend-item">
+        <span class="circle high"></span> High Risk
+      </div>
+      <div class="legend-item">
+        <span class="circle medium"></span> Medium Risk
+      </div>
+      <div class="legend-item">
+        <span class="circle low"></span> Low Risk
+      </div>
+    </div>
+  </div>
+  
+  <div class="network-data">
+    <h3>Entities</h3>
+    <div class="entity-list">
+      <div *ngFor="let entity of networkData?.entities" 
+           class="entity-card"
+           [class.high-risk]="entity.riskScore >= 0.7"
+           [class.medium-risk]="entity.riskScore >= 0.4 && entity.riskScore < 0.7"
+           [class.low-risk]="entity.riskScore < 0.4">
+        <h4>{{entity.name}}</h4>
+        <p>Type: {{entity.type}}</p>
+        <p>Risk Score: {{entity.riskScore}}</p>
+        <div *ngIf="entity.flags?.length" class="flags">
+          <span *ngFor="let flag of entity.flags" class="flag">{{flag}}</span>
+        </div>
+      </div>
+    </div>
+    <h3>Transactions</h3>
+    <div class="transaction-list">
+      <div *ngFor="let tx of networkData?.transactions" class="transaction-card">
+        <p>Amount: ${{tx.amount}}</p>
+        <p>Risk Score: {{tx.riskScore}}</p>
+        <p>Date: {{tx.timestamp | date}}</p>
+      </div>
+    </div>
+  </div>
+</div>

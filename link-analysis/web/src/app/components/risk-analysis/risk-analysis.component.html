@@ -1,0 +1,41 @@
+<div class="risk-analysis-container">
+  <div class="header">
+    <h2>Risk Analysis</h2>
+    <div class="entity-selector">
+      <select (change)="onEntitySelect($event)" class="entity-select">
+        <option *ngFor="let entity of entities" [value]="entity.id">
+          {{entity.name}} (Risk: {{(entity.riskScore * 100).toFixed(0)}}%)
+        </option>
+      </select>
+    </div>
+  </div>
+
+  <div class="risk-dashboard" *ngIf="currentReport">
+    <div class="main-section">
+      <div class="score-section">
+        <div class="overall-score" [class]="getRiskLevel(currentReport.overallScore)">
+          <h3>Overall Risk Score</h3>
+          <div class="score">{{(currentReport.overallScore * 100).toFixed(0)}}%</div>
+        </div>
+        <app-risk-factor-breakdown
+          [riskScore]="currentReport.score"
+          [riskFactors]="riskFactors">
+        </app-risk-factor-breakdown>
+      </div>
+
+      <app-risk-patterns
+        [patterns]="currentReport.detectedPatterns">
+      </app-risk-patterns>
+    </div>
+
+    <div class="side-section">
+      <app-risk-comparison
+        [entities]="entities">
+      </app-risk-comparison>
+
+      <app-transaction-timeline
+        [transactions]="entityTransactions">
+      </app-transaction-timeline>
+    </div>
+  </div>
+</div>

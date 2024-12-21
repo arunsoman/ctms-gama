@@ -1,0 +1,49 @@
+<div class="filters-container">
+  <div class="filter-group">
+    <label>Date Range</label>
+    <div class="date-inputs">
+      <input type="date" [(ngModel)]="filters.dateRange.start" (change)="applyFilters()" />
+      <input type="date" [(ngModel)]="filters.dateRange.end" (change)="applyFilters()" />
+    </div>
+  </div>
+  
+  <div class="filter-group">
+    <label>Risk Threshold</label>
+    <input 
+      type="range" 
+      min="0" 
+      max="1" 
+      step="0.1" 
+      [(ngModel)]="filters.riskThreshold" 
+      (change)="applyFilters()" 
+    />
+    <span>{{filters.riskThreshold}}</span>
+  </div>
+  
+  <div class="filter-group">
+    <label>Entity Types</label>
+    <div class="checkbox-group">
+      <label>
+        <input 
+          type="checkbox" 
+          value="account" 
+          (change)="toggleEntityType($event)" 
+        /> Accounts
+      </label>
+      <label>
+        <input 
+          type="checkbox" 
+          value="individual" 
+          (change)="toggleEntityType($event)" 
+        /> Individuals
+      </label>
+      <label>
+        <input 
+          type="checkbox" 
+          value="business" 
+          (change)="toggleEntityType($event)" 
+        /> Businesses
+      </label>
+    </div>
+  </div>
+</div>
