@@ -1,3 +1,60 @@
+# Java
+# Ignore Maven build directory
+target/
+# Ignore compiled class files
+*.class
+# Ignore JAR files
+*.jar
+# Ignore WAR files
+*.war
+# Ignore IDE specific files
+*.iml
+.idea/
+.settings/
+.classpath
+.project
+
+# Node.js
+# Ignore node_modules directory
+node_modules/
+# Ignore npm logs
+npm-debug.log
+yarn-error.log
+
+# Angular
+# Ignore Angular build output and environment files
+/dist/
+/node_modules/
+/coverage/
+*.env
+/.angular/
+
+# Visual Studio Code
+.vscode/
+.history/
+
+# IntelliJ IDEA
+.idea/
+*.iml
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Backup files created by editors (e.g., Vim)
+*~
+*.swp
+
+# Other common ignores for various environments
+*.bak
+*.orig
+
+# Ignore any other specific directories or files as needed
+
 # Compiled class file
 *.class
 
